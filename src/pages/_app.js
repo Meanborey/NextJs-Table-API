@@ -1,14 +1,14 @@
-import '../styles/globals.css'
-import '../styles/Home.module.css'
-import Layout from '../components/layout'
-export default function App({ Component, pageProps }) {
+import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
+import "../styles/globals.css";
+
+function MyApp({ Component, pageProps }) {
+  
   return (
-    <>
-   
-  <Layout>
-    <Component {...pageProps} />
-  </Layout>
- </>
-    
+  <>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTBZkWWuUHNahSjQZtmeoQYjMvmHe1WYuCTNTKfAdVQSZe" crossorigin="anonymous"></script>
+  <Component {...pageProps} />;
+  </>
   )
 }
+
+export default MyApp

@@ -1,23 +1,13 @@
 
-import data from 'autoprefixer';
 import React, { useEffect, useState} from 'react'
 // import DataTable from 'react-data-table-components';
 import DataTable from 'react-data-table-component';
-
-export default function Table() {
+import Layout from 'src/components/layout';
+ function Table({results}) {
 	const [products,setProduct]=useState([]);
-	const [inputValue, setInputValue] = useState('');
 	useEffect(() => {
-		const fetchSearchResults = async () => {
-			const response = await fetch(`https://api.escuelajs.co/api/v1/products?product=${inputValue}`);
-			const data = await response.json();
-			setProduct(data);
-		};
-		fetchSearchResults();
-	}, [inputValue]);
-	const handleInputChange = (event) => {
-		setInputValue(event.target.value);
-	};
+        setProduct(results)
+	}, []);
 	const columns=[
 		{
 			name:"ProductName",
@@ -46,17 +36,48 @@ export default function Table() {
 			)
 		},
 	]
+	function handleSearching(event) {
+        const data_searching = results.filter(row => row.title.toLowerCase().includes(event.target.value.toLowerCase())); 
+        setProduct(data_searching); 
+    }
 	return (
-		
+		<Layout>
 		<div className='text-3xl font-bold'>
 			<DataTable 
 				title="All Products Listing"
 				columns={columns} 
 				data={products}
-				subHeader
-				
+				subHeader	
 				pagination
+				actions={
+					<div className="text-end">
+						<input
+							type="text"
+							className="rounded border-1"
+							style={{
+								padding: "3px 10px",
+								width: "300px",
+								fontSize: "15px",
+							}}
+							placeholder="Search"
+							onChange={handleSearching}
+						></input>
+					</div>
+				}
 			/>
 		</div>
+		</Layout>
 	)
 }
+export async function getServerSideProps(){
+	const resp= await fetch("https://api.escuelajs.co/api/v1/products")
+	const results = await resp.json()
+	console.log(results)
+			return{
+			   props:{
+			  results
+			 }
+			}
+			  }
+
+export default Table

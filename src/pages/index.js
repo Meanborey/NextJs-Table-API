@@ -1,6 +1,6 @@
 // import Table from '../components/layout'
 import Head from 'next/head'
-import Table from '../components/Table'
+import Table from './table'
 import Layout from 'src/components/layout'
 // export default function Home() {
  
